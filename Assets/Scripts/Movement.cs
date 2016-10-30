@@ -47,10 +47,12 @@ public class Movement : MonoBehaviour {
         }
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.W))
         {
-            GameObject maze = GameObject.FindGameObjectWithTag("Maze");
+            GameObject maze = GameObject.Find("Maze");
+            EnemyScript enemy = GameObject.Find("Enemy").GetComponent<EnemyScript>();
             foreach (Transform wall in maze.transform)
             {
                 wall.GetComponent<BoxCollider>().enabled = !wall.GetComponent<BoxCollider>().enabled;
+                enemy.setMoving(!enemy.getMoving());
             }
         }
         controller.Move(moveDirection * Time.deltaTime);

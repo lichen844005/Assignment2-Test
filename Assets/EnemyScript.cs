@@ -9,6 +9,7 @@ public class EnemyScript : MonoBehaviour {
     private float speed = 1f;
     private int direction;
     private int[] pathways = new int[4];
+    private bool moving = true;
 
 	// Use this for initialization
 	void Start () {
@@ -18,15 +19,21 @@ public class EnemyScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        Vector3 fwd = transform.TransformDirection(Vector3.forward);
-        if (Physics.Raycast(transform.position, fwd, 0.5f))
+        if (moving)
         {
-            WallHitDirectionChange();
+            Vector3 fwd = transform.TransformDirection(Vector3.forward);
+            if (Physics.Raycast(transform.position, fwd, 0.5f))
+            {
+                WallHitDirectionChange();
+            }
+            moveDirection = transform.TransformDirection(Vector3.forward) * speed;
+            controller.Move(moveDirection * Time.deltaTime);
         }
-        moveDirection = transform.TransformDirection(Vector3.forward) * speed;
-        controller.Move(moveDirection * Time.deltaTime);
     }
+
+    public bool getMoving() { return moving; }
+
+    public void setMoving(bool move) { moving = move; }
 
     void WallHitDirectionChange()
     {
