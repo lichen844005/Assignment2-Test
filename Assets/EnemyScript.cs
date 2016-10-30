@@ -2,12 +2,6 @@
 using System.Collections.Generic;
 using System.Collections;
 
-struct Node
-{
-    List<Node> nodes;
-    Vector3 pos;
-}
-
 public class EnemyScript : MonoBehaviour {
 
     public Vector3 startPos, moveDirection, currentPos;
@@ -15,18 +9,10 @@ public class EnemyScript : MonoBehaviour {
     private float speed = 1f;
     private int direction;
     private int[] pathways = new int[4];
-    private Node[,] tree = new Node[10,10];
 
 	// Use this for initialization
 	void Start () {
         startPos = currentPos = transform.position;
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 10; j++)
-            {
-
-            }
-        }
 
 	}
 	
@@ -78,7 +64,7 @@ public class EnemyScript : MonoBehaviour {
             else if (greatest == pathways[i])
             {
                 System.Random random = new System.Random();
-                if (random.Next(0, 100) <= 50)
+                if (random.Next(0, 2) == 0)
                 {
                     direction = i;
                 }

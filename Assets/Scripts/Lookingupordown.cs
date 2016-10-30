@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Lookingupordown : MonoBehaviour {
 
-    public float speed = 20f;
+    public float speed = 1f;
 	// Use this for initialization
 	void Start () {
 	
@@ -13,12 +13,11 @@ public class Lookingupordown : MonoBehaviour {
 	void Update () {
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            transform.Rotate(Vector3.left, speed * Time.deltaTime);
+            transform.Rotate(new Vector3(-speed, 0, 0));
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-
-            transform.Rotate(Vector3.right, speed * Time.deltaTime);
+            transform.Rotate(new Vector3(speed, 0, 0));
         }
     }
 }
