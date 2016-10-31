@@ -5,13 +5,15 @@ public class Movement : MonoBehaviour {
     public float speed = 5f;
     public CharacterController controller;
     private Vector3 moveDirection = Vector3.zero;
+    public GameObject Player;
+   // public GameObject Rigidbody;
     // Use this for initialization
     void Start () {
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(new Vector3(0, -speed, 0));
@@ -40,5 +42,29 @@ public class Movement : MonoBehaviour {
         }
         controller.Move(moveDirection * Time.deltaTime);
         moveDirection = Vector3.zero;
-    }
+
+        if (Input.GetKeyDown(KeyCode.Home))
+        {
+            Player.transform.position = new Vector3(0, 0.44f, 0.25f);
+           
+        }
+       
+
+       }
+
+//    void RemoveRigidbody()
+    //{
+
+       // if (this.gameObject.gameObject.< Rigidbody > ())
+         //   Destroy(this.gameObject.gameObject.< Rigidbody > ());
+
+        
+  //if (Input.GetKeyDown(KeyCode.P))
+       // {
+
+           // RemoveRigidbody();
+        //}
+    //}
+    
+      
 }
