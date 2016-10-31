@@ -63,7 +63,6 @@ public class Movement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Home))
         {
             Player.transform.position = new Vector3(0, 0.44f, 0.25f);
-           
         }
        
 
