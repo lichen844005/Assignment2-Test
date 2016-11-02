@@ -53,9 +53,20 @@ public class Movement : MonoBehaviour {
             EnemyScript enemy = GameObject.Find("Enemy").GetComponent<EnemyScript>();
             foreach (Transform wall in maze.transform)
             {
-                wall.GetComponent<BoxCollider>().enabled = !wall.GetComponent<BoxCollider>().enabled;
-                enemy.setMoving(!enemy.getMoving());
+                foreach (Transform wallSection in wall.transform)
+                {
+                    wallSection.GetComponent<MeshCollider>().enabled = !wallSection.GetComponent<MeshCollider>().enabled;
+                }
             }
+            enemy.setMoving(!enemy.getMoving());
+            if (enemy.GetComponent<Animation>().isPlaying)
+            {
+                enemy.GetComponent<Animation>().Stop();
+            } else
+            {
+                enemy.GetComponent<Animation>().Play("Take 001");
+            }
+            
         }
         controller.Move(moveDirection * Time.deltaTime);
         moveDirection = Vector3.zero;
