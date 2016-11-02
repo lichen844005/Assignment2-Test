@@ -14,7 +14,7 @@
         Pass
         {
             CGPROGRAM
-            #pragma target 2.0
+            #pragma target 3.0
             #pragma vertex vertexShader
             #pragma fragment fragmentShader
  
