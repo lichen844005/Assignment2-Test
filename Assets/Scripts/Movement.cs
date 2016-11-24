@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour {
     public float speed = 2f;
@@ -140,7 +139,13 @@ public class Movement : MonoBehaviour {
                 rend.material.shader = shade1;
             }
         }
+    }
 
-   }
-      
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.collider.name == "Door")
+        {
+            SceneManager.LoadScene("Menu");
+        }
+    }
 }
