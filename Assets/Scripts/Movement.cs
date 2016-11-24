@@ -21,11 +21,11 @@ public class Movement : MonoBehaviour {
     void Update() {
         if (Input.GetKey(KeyCode.A) || Input.GetAxis("RightStickX") < 0)
         {
-            transform.Rotate(new Vector3(0, -speed * 2, 0));
+            transform.Rotate(0, -speed * 2, 0);
         }
         if (Input.GetKey(KeyCode.D) || Input.GetAxis("RightStickX") > 0)
         {
-            transform.Rotate(new Vector3(0, speed * 2, 0));
+            transform.Rotate(0, speed * 2, 0);
         }
         if (Input.GetKey(KeyCode.Q) || Input.GetAxis("Horizontal") < 0)
         {
@@ -42,6 +42,11 @@ public class Movement : MonoBehaviour {
         if (Input.GetKey(KeyCode.S) || Input.GetAxis("Vertical") < 0)
         {
             moveDirection += transform.TransformDirection(Vector3.forward) * -speed;
+        }
+        if (moveDirection != Vector3.zero)
+        {
+            controller.Move(moveDirection * Time.deltaTime);
+            moveDirection = Vector3.zero;
         }
         if (Input.GetKey(KeyCode.Home) || Input.GetKeyDown(KeyCode.Joystick1Button7))
         {
@@ -69,8 +74,6 @@ public class Movement : MonoBehaviour {
             }
             
         }
-        controller.Move(moveDirection * Time.deltaTime);
-        moveDirection = Vector3.zero;
         
         if (Input.GetKeyDown(KeyCode.U))
         {
