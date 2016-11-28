@@ -29,6 +29,7 @@ public class EnemyScript : MonoBehaviour {
             moveDirection = transform.TransformDirection(Vector3.forward) * speed;
             controller.Move(moveDirection * Time.deltaTime);
         }
+
     }
 
     public bool getMoving() { return moving; }

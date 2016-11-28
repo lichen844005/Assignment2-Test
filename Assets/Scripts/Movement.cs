@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Movement : MonoBehaviour {
     public float speed = 2f;
@@ -9,6 +10,7 @@ public class Movement : MonoBehaviour {
     public GameObject Player;
     private Shader dayShader, nightShader;
     private bool nightDay = false;
+    public float gravity = 2.0f;
    // public GameObject Rigidbody;
     // Use this for initialization
     void Start () {
@@ -18,27 +20,27 @@ public class Movement : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKey(KeyCode.A) || Input.GetAxis("RightStickX") < 0)
+        if (Input.GetKey(KeyCode.Q) || Input.GetAxis("RightStickX") < 0 || CrossPlatformInputManager.GetAxis("Horizontal") < 0)
         {
             transform.Rotate(0, -speed * 2, 0);
         }
-        if (Input.GetKey(KeyCode.D) || Input.GetAxis("RightStickX") > 0)
+        if (Input.GetKey(KeyCode.E) || Input.GetAxis("RightStickX") > 0 || CrossPlatformInputManager.GetAxis("Horizontal") > 0)
         {
             transform.Rotate(0, speed * 2, 0);
         }
-        if (Input.GetKey(KeyCode.Q) || Input.GetAxis("Horizontal") < 0)
+        if (Input.GetKey(KeyCode.A) || Input.GetAxis("Horizontal") < 0)
         {
             moveDirection += transform.TransformDirection(Vector3.left) * speed;
         }
-        if (Input.GetKey(KeyCode.E) || Input.GetAxis("Horizontal") > 0)
+        if (Input.GetKey(KeyCode.D) || Input.GetAxis("Horizontal") > 0)
         {
             moveDirection += transform.TransformDirection(Vector3.left) * -speed;
         }
-        if (Input.GetKey(KeyCode.W) || Input.GetAxis("Vertical") > 0)
+        if (Input.GetKey(KeyCode.W) || Input.GetAxis("Vertical") > 0 || CrossPlatformInputManager.GetAxis("Vertical") > 0)
         {
             moveDirection += transform.TransformDirection(Vector3.forward) * speed;
         }
-        if (Input.GetKey(KeyCode.S) || Input.GetAxis("Vertical") < 0)
+        if (Input.GetKey(KeyCode.S) || Input.GetAxis("Vertical") < 0 || CrossPlatformInputManager.GetAxis("Vertical") < 0)
         {
             moveDirection += transform.TransformDirection(Vector3.forward) * -speed;
         }
@@ -73,6 +75,10 @@ public class Movement : MonoBehaviour {
             }
             
         }
+
+        moveDirection.y = -gravity * Time.deltaTime;
+        controller.Move(moveDirection * Time.deltaTime);
+        moveDirection = Vector3.zero;
         
         if (Input.GetKeyDown(KeyCode.U))
         {
