@@ -7,11 +7,13 @@ public class BulletScript : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.collider.name);
+        if (collision.collider.name != "bullet(Clone)")
+        {
+            GetComponent<AudioSource>().Play();
+        }
         if (collision.collider.name == "Enemy")
         {
             ScoreManager.AddScore(scoreToAdd);
-
             Destroy(gameObject);
         }
 
