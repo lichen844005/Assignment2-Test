@@ -10,11 +10,12 @@ public class EnemyScript : MonoBehaviour {
     private int direction;
     private int[] pathways = new int[4];
     private bool moving = true;
+    private float height;
 
 	// Use this for initialization
 	void Start () {
         startPos = currentPos = transform.position;
-
+        height = transform.position.y;
 	}
 	
 	// Update is called once per frame
@@ -28,6 +29,8 @@ public class EnemyScript : MonoBehaviour {
             }
             moveDirection = transform.TransformDirection(Vector3.forward) * speed;
             controller.Move(moveDirection * Time.deltaTime);
+            Vector3 temp = new Vector3(transform.position.x, height, transform.position.z);
+            transform.position = temp;
         }
 
     }
@@ -81,4 +84,12 @@ public class EnemyScript : MonoBehaviour {
         pathways = new int[4];
         transform.Rotate(new Vector3(0, (direction + 1) * 90f, 0));
     }
+
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.collider.name == "bullet(Clone)")
+            if (!GetComponent<AudioSource>().isPlaying)
+                GetComponent<AudioSource>().Play();
+    }
+
 }

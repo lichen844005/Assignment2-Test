@@ -20,6 +20,7 @@ public class WinManager : MonoBehaviour
 
     public void LoadMenu(string name)
     {
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene(name);
     }
 

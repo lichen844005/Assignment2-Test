@@ -27,7 +27,6 @@ public class Player1Control : MonoBehaviour
         {
             Vector2 touchDeltaPosition = Input.GetTouch(0).position;
             Vector3 p = camera.ScreenToWorldPoint(new Vector3(touchDeltaPosition.x, touchDeltaPosition.y, 15.23f));
-            Debug.Log(touchDeltaPosition);
             if (transform.position.y > p.y)
             {
                 moveDirection = new Vector3(0, -speed, 0);
