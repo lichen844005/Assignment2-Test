@@ -5,7 +5,7 @@ using System.Collections;
 public class ScoreManager : MonoBehaviour {
 
     private GameObject Text;
-    private static int score;
+    public static int score;
     private static Text text;
 
 	// Use this for initialization
@@ -18,6 +18,18 @@ public class ScoreManager : MonoBehaviour {
     public static void AddScore(int scoreToAdd)
     {
         score += scoreToAdd;
+        text.text = "Score:" + score;
+    }
+
+    public static int getScore()
+    {
+        return score;
+    }
+
+
+    public static void SetScore(int scoreToAdd)
+    {
+        score = scoreToAdd;
         text.text = "Score:" + score;
     }
 }

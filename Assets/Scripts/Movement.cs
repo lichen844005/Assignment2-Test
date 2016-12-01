@@ -10,6 +10,7 @@ public class Movement : MonoBehaviour {
     public GameObject Player;
     private Shader dayShader, nightShader;
     private bool nightDay = false;
+    private bool flashlight = false;
     public AudioSource walking, wallHit;
     public AudioSource day, night;
     private float height;
@@ -24,7 +25,8 @@ public class Movement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
 
         if (Input.GetKey(KeyCode.A) || Input.GetAxis("Horizontal") < 0 || CrossPlatformInputManager.GetAxis("Horizontal") < 0)
         {
@@ -52,7 +54,8 @@ public class Movement : MonoBehaviour {
             {
                 walking.Play();
             }
-        } else
+        }
+        else
         {
             walking.Pause();
         }
@@ -75,19 +78,20 @@ public class Movement : MonoBehaviour {
             if (enemy.GetComponent<Animation>().isPlaying)
             {
                 enemy.GetComponent<Animation>().Stop();
-            } else
+            }
+            else
             {
                 enemy.GetComponent<Animation>().Play("Take 001");
             }
-            
+
         }
-        
+
         if (Input.GetKeyDown(KeyCode.U) || Input.GetKeyDown(KeyCode.Joystick1Button3))
         {
             Renderer rend;
             foreach (Transform wall in GameObject.Find("Maze").transform)
             {
-                foreach(Transform wallsection in wall)
+                foreach (Transform wallsection in wall)
                 {
                     rend = wallsection.GetComponent<Renderer>();
                     if (wallsection.name == "South" || wallsection.name == "East" || wallsection.name == "North" || wallsection.name == "West" || wallsection.name == "Door")
@@ -116,7 +120,8 @@ public class Movement : MonoBehaviour {
             {
                 day.Pause();
                 night.Play();
-            } else
+            }
+            else
             {
                 night.Pause();
                 day.Play();
@@ -168,15 +173,52 @@ public class Movement : MonoBehaviour {
                 day.volume = 0.1f;
                 night.volume = 0.1f;
                 switchFog = false;
-            } else
+            }
+            else
             {
                 switchFog = true;
             }
         }
         if (Input.GetKeyDown("escape"))
             Cursor.lockState = CursorLockMode.None;
+        if (Input.GetKeyDown(KeyCode.F4) || Input.GetKeyDown(KeyCode.Joystick1Button0))
+        {
+            day.mute = !day.mute;
+            night.mute = !night.mute;
+        }
+        if (Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.Joystick1Button1))
+        {
+            Renderer rend;
+            foreach (Transform wall in GameObject.Find("Maze").transform)
+            {
+                foreach (Transform wallsection in wall)
+                {
+                    rend = wallsection.GetComponent<Renderer>();
+                    if (wallsection.name == "South" || wallsection.name == "East" || wallsection.name == "North" || wallsection.name == "West" || wallsection.name == "Door")
+                    {
+                        if (flashlight == false)
+                        {
+                            rend.material.SetFloat("_SpecularIntensity", 0.0f);
+                        }
+                        else
+                        {
+                            rend.material.SetFloat("_SpecularIntensity", 1.0f);
+                        }
+                    }
+                }
+            }
+            rend = GameObject.Find("FloorModel").GetComponent<Renderer>();
+            if (flashlight == false)
+            {
+                rend.material.SetFloat("_SpecularIntensity", 0.0f);
+            }
+            else
+            {
+                rend.material.SetFloat("_SpecularIntensity", 1.0f);
+            }
+            flashlight = !flashlight;
+        }
     }
-
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.collider.name == "Door")
